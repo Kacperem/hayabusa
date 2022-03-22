@@ -5,16 +5,22 @@ export interface CalculatorState {
   firstNumber: number;
   secondNumber: number;
   finalNumber: number;
+  selector: string;
 }
 export interface UpdatedProps {
   value: number;
   name: string;
 }
 
+export interface UpdatedSelector {
+  value: string;
+}
+
 const initialState: CalculatorState = {
   firstNumber: 0,
   secondNumber: 0,
   finalNumber: 0,
+  selector: "",
 };
 
 export const calculatorSlice = createSlice({
@@ -29,8 +35,19 @@ export const calculatorSlice = createSlice({
         state.secondNumber = action.payload.value;
       }
     },
-    addNumbers: (state) => {
-      state.finalNumber = state.firstNumber + state.secondNumber;
+    addNumbers: (state, action: PayloadAction<UpdatedSelector>) => {
+      if (action.payload.value === "+"){
+        state.finalNumber = state.firstNumber + state.secondNumber;
+      }
+      if (action.payload.value === "-"){
+        state.finalNumber = state.firstNumber - state.secondNumber;
+      }
+      if (action.payload.value === "*"){
+        state.finalNumber = state.firstNumber * state.secondNumber;
+      }
+      if (action.payload.value === "/"){
+        state.finalNumber = state.firstNumber / state.secondNumber;
+      }
     },
   },
 });
