@@ -1,20 +1,16 @@
-import { Box } from "@mui/material";
-import { FC, useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
+import { FC } from "react";
+import { useAppSelector } from "../app/hooks";
+import { calculatorCount } from "./redux/calculatorSlice";
 
-interface ObjectWithNumbers {
-  firstNumber: number;
-  secondNumber: number;
-}
-interface Props {
-  result: ObjectWithNumbers;
-}
-
-export const Result: FC<Props> = ({ result }) => {
-  const [finalNumber, setFinalNumber] = useState<number>(0);
-
-  useEffect(() => {
-    setFinalNumber(result.firstNumber + result.secondNumber);
-  }, [result]);
-
-  return <Box sx={{ p: 1 }}>{finalNumber}</Box>;
+export const Result: FC = () => {
+  const count = useAppSelector(calculatorCount);
+  const { finalNumber } = count;
+  return (
+    <Box sx={{ p: 1 }}>
+      <Typography variant="h5" component="div" gutterBottom>
+        {finalNumber}
+      </Typography>
+    </Box>
+  );
 };
